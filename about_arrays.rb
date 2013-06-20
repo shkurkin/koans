@@ -63,7 +63,7 @@ class AboutArrays < Neo::Koan
     array = [1,2]
     array.push(:last)
 
-    assert_equal __, array
+    assert_equal [1,2,:last], array
 
     popped_value = array.pop
     assert_equal __, popped_value
