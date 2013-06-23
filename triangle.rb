@@ -14,7 +14,25 @@
 #   about_triangle_project_2.rb
 #
 def triangle(a, b, c)
-  # WRITE THIS CODE
+  begin
+  	sides = [a,b,c]
+  	sides.sort!
+
+  	if sides[2] - sides[0] - sides[1] >= 0
+  		raise TriangleError.new("Not a valid triangle.")
+  	end
+
+  	if a <= 0 || b <= 0 || c <= 0
+  		raise TriangleError.new("Not a valid triangle.")
+  	end
+    if a == b && b == c
+    	return :equilateral
+    elsif a != b && a != c && b != c
+    	return :scalene
+    else
+    	return :isosceles
+    end
+  end
 end
 
 # Error class used in part 2.  No need to change this code.
