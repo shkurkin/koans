@@ -15,10 +15,44 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 class Proxy
   def initialize(target_object)
     @object = target_object
+    @methods_sent = {}
     # ADD MORE CODE HERE
   end
 
+  def method_missing(method_name, *args, &block)
+    if @methods_sent.has_key?(method_name)
+      @methods_sent[method_name] += 1
+    else
+      @methods_sent[method_name] = 1
+    end
+    result = @object.send(method_name, *args, &block)
+    return result
+  end
+
+  def messages
+    method_names = []
+    @methods_sent.each do |key, value|
+      method_names << key
+    end
+    return method_names
+  end
   # WRITE CODE HERE
+
+  def called?(method)
+    if @methods_sent.has_key?(method)
+      return true
+    end
+    false
+  end
+
+  def number_of_times_called(method)
+    if @methods_sent.has_key?(method)
+      return @methods_sent[method]
+    else
+      return 0
+    end
+  end
+
 end
 
 # The proxy object should pass the following Koan:
